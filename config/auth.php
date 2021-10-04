@@ -14,7 +14,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
+        'guard' => 'api',
         'passwords' => 'users',
     ],
 
@@ -40,6 +40,21 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'api' => [
+            'driver' => 'jwt',
+            'provider' => 'administrators',
+            'hash' => false,
+        ],
+        'admin' => [
+            'driver' => 'jwt',
+            'provider' => 'administrators',
+            'hash' => false,
+        ],
+        'user' => [
+            'driver' => 'jwt',
+            'provider' => 'users',
+            'hash' => false,
+        ],
     ],
 
     /*
@@ -64,11 +79,10 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'administrators' => [
+            'driver' => 'eloquent',
+            'model' => App\Administrator::class,
+        ],
     ],
 
     /*
@@ -93,6 +107,12 @@ return [
             'expire' => 60,
             'throttle' => 60,
         ],
+        'administrators' => [
+            'provider' => 'administrators',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
     ],
 
     /*
@@ -106,6 +126,6 @@ return [
     |
     */
 
-    'password_timeout' => 10800,
+    'password_timeout' => 43200,
 
 ];
