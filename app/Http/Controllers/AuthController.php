@@ -33,11 +33,6 @@ class AuthController extends Controller
     {
         $credentials = $request->only(['email', 'password']);
 
-        Log::debug("ーーーーーーー");
-        Log::debug($credentials);
-        Log::debug("ーーーーーーー");
-
-
         if (!$token = auth()->attempt($credentials)) {
             throw new UnauthorizedException(
                 'メールアドレスかパスワードが誤っています',
@@ -74,6 +69,17 @@ class AuthController extends Controller
     public function me(): JsonResponse
     {
         return response()->json(auth()->user());
+    }
+
+    /**
+     * Get the authenticated User.
+     *
+     * @return JsonResponse
+     */
+    public function myAdmin(): JsonResponse
+    {
+        $token = auth()->guard('admin')->tokenById(auth()->user()->id);
+        return $this->respondWithToken($token, 'admin');
     }
 
     /**

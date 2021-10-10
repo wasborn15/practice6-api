@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::post('auth/login', 'AuthController@login');
+Route::get('auth/me', 'AuthController@myAdmin');
 Route::get('admin', "AdministratorController@index")->middleware('auth:api');
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
